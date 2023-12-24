@@ -7,11 +7,11 @@ from sklearn.linear_model import LinearRegression
 import warnings
 warnings.filterwarnings('ignore')  # Ignore warnings
 
-df = pd.read_csv('machine.data')
+df = pd.read_csv('machine.data') # Load the dataset (credits for dataset in README)
 df.columns = ['VendorName', 'ModelName', 'MachCycle', 'MinMem', 'MaxMem', 'Cach', 'MinChan', 'MaxChan', 'PubPerf', 'ExpPerf']
 df = df.drop(['VendorName', 'ModelName', 'ExpPerf'], axis = 1) # Drop useless Features
 
-train, valid, test = np.split(df.sample(frac=1),[int(0.6*len(df)),int(0.8*len(df))])
+train, valid, test = np.split(df.sample(frac=1),[int(0.6*len(df)),int(0.8*len(df))]) # Split data for train and validation.
 cols = ['MachCycle', 'MinMem', 'MaxMem', 'Cach', 'MinChan', 'MaxChan']
 
 
@@ -43,7 +43,7 @@ for i in cols:
     r2[i] = sing_linreg.score(x_valid, y_valid)
     preds[i] = perf_pred_sing
 MaxRsq = max(r2, key= lambda x: r2[x])
-# print(MaxRsq) # Max R**2 value is given with MaxMem
+print(MaxRsq) # Max R**2 value is given with MaxMem
 
 plt.scatter(valid['MaxMem'].values, valid['PubPerf'].values)
 plt.scatter(valid['MaxMem'].values, preds[MaxRsq])
@@ -61,4 +61,5 @@ plt.xlabel('MaxMem')
 plt.ylabel('PubPerf')
 plt.legend(['Actual Data', 'Single Variate Linear Regression', 'Multi Variate Regression'])
 plt.show() # Final graph showing the regression outputs
+
 
